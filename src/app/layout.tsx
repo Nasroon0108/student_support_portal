@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import BootstrapClient from "@/components/BootstrapClient";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "Campus Companion – Student Support & Welfare Management",
+  title: "Campus Companion - Student Support & Welfare",
   description:
-    "A comprehensive student support, campus safety, and welfare management system for educational institutions.",
+    "Campus Companion – Student Support, Campus Safety, and Welfare Management System",
 };
 
 export default function RootLayout({
@@ -17,10 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="page-wrapper">
-          {children}
-        </div>
-        <BootstrapClient />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

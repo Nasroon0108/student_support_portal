@@ -1,29 +1,75 @@
-export default function HomePage() {
+import Link from "next/link";
+
+export default function Home() {
   return (
-    <main className="main-content">
-      {/* Hero Section */}
-      <section className="bg-primary text-white py-5">
+    <div className="min-vh-100 d-flex flex-column">
+      {/* Navbar */}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <div className="row align-items-center min-vh-50">
-            <div className="col-lg-8 mx-auto text-center">
+          <Link href="/" className="navbar-brand fw-bold">
+            🎓 Campus Companion
+          </Link>
+          <div className="d-flex gap-2">
+            <Link href="/login" className="btn btn-outline-light btn-sm">
+              Login
+            </Link>
+            <Link href="/register" className="btn btn-primary btn-sm">
+              Register
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="flex-grow-1 d-flex align-items-center bg-dark text-white">
+        <div className="container py-5">
+          <div className="row align-items-center">
+            <div className="col-lg-6">
               <h1 className="display-4 fw-bold mb-3">
-                Campus Companion
+                Your Campus, Your Companion
               </h1>
-              <p className="lead mb-4">
-                Student Support, Campus Safety &amp; Welfare Management System
+              <p className="lead mb-4 text-light opacity-75">
+                A unified platform for student support, campus safety, and
+                welfare management. Report issues, book appointments, access
+                counseling, and stay informed — all in one place.
               </p>
-              <p className="mb-4">
-                A comprehensive platform designed to support student welfare,
-                enhance campus safety, and streamline support services for
-                educational institutions.
-              </p>
-              <div className="d-flex gap-3 justify-content-center">
-                <a href="/auth/login" className="btn btn-light btn-lg">
+              <div className="d-flex gap-3">
+                <Link href="/register" className="btn btn-primary btn-lg px-4">
+                  Get Started
+                </Link>
+                <Link href="/login" className="btn btn-outline-light btn-lg px-4">
                   Sign In
-                </a>
-                <a href="/auth/register" className="btn btn-outline-light btn-lg">
-                  Register
-                </a>
+                </Link>
+              </div>
+            </div>
+            <div className="col-lg-6 text-center mt-4 mt-lg-0">
+              <div className="p-4">
+                <div className="row g-3">
+                  <div className="col-6">
+                    <div className="card bg-white bg-opacity-10 border-0 p-3 text-center">
+                      <div className="fs-1">📚</div>
+                      <small>Academic Support</small>
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="card bg-white bg-opacity-10 border-0 p-3 text-center">
+                      <div className="fs-1">🛡️</div>
+                      <small>Campus Safety</small>
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="card bg-white bg-opacity-10 border-0 p-3 text-center">
+                      <div className="fs-1">💬</div>
+                      <small>Counseling</small>
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="card bg-white bg-opacity-10 border-0 p-3 text-center">
+                      <div className="fs-1">📅</div>
+                      <small>Appointments</small>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -31,44 +77,38 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-5">
+      <section className="py-5 bg-white">
         <div className="container">
-          <h2 className="text-center mb-5 fw-bold">Key Features</h2>
+          <h2 className="text-center fw-bold mb-5">How It Works</h2>
           <div className="row g-4">
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
-                <div className="card-body text-center p-4">
-                  <div className="fs-1 mb-3">🛡️</div>
-                  <h5 className="card-title">Campus Safety</h5>
-                  <p className="card-text text-muted">
-                    Report incidents, access emergency resources, and stay
-                    informed about campus safety updates in real-time.
-                  </p>
-                </div>
+              <div className="card h-100 p-4 text-center">
+                <div className="fs-1 mb-3">📝</div>
+                <h5 className="fw-bold">Report an Issue</h5>
+                <p className="text-muted">
+                  Submit tickets for academic issues, campus safety concerns,
+                  maintenance requests, or counseling needs.
+                </p>
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
-                <div className="card-body text-center p-4">
-                  <div className="fs-1 mb-3">🤝</div>
-                  <h5 className="card-title">Student Support</h5>
-                  <p className="card-text text-muted">
-                    Access counseling services, academic support, and wellness
-                    resources all in one place.
-                  </p>
-                </div>
+              <div className="card h-100 p-4 text-center">
+                <div className="fs-1 mb-3">👥</div>
+                <h5 className="fw-bold">Get Assigned Help</h5>
+                <p className="text-muted">
+                  Your ticket is routed to the right staff — counselors, academic
+                  advisors, marshals, or maintenance.
+                </p>
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
-                <div className="card-body text-center p-4">
-                  <div className="fs-1 mb-3">🤖</div>
-                  <h5 className="card-title">AI Assistant</h5>
-                  <p className="card-text text-muted">
-                    Get instant answers to your questions with our AI-powered
-                    campus companion chatbot.
-                  </p>
-                </div>
+              <div className="card h-100 p-4 text-center">
+                <div className="fs-1 mb-3">✅</div>
+                <h5 className="fw-bold">Track & Resolve</h5>
+                <p className="text-muted">
+                  Follow your case progress, receive notifications, and
+                  communicate until it&apos;s resolved.
+                </p>
               </div>
             </div>
           </div>
@@ -76,14 +116,13 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark text-white py-4 mt-auto">
+      <footer className="bg-dark text-white py-4">
         <div className="container text-center">
-          <p className="mb-0">
-            &copy; {new Date().getFullYear()} Campus Companion. All rights
-            reserved.
+          <p className="mb-0 opacity-75">
+            © 2026 Campus Companion. Built for student welfare and campus safety.
           </p>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
