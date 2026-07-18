@@ -8,10 +8,11 @@ export default async function AppointmentsPage() {
   const userId = session?.user?.id;
 
   const isStudent = role === "STUDENT";
+  const isAdmin = role === "ADMIN";
 
   const where = isStudent
     ? { studentId: userId }
-    : role === "ADMIN"
+    : isAdmin
     ? {}
     : { staffId: userId };
 
@@ -24,12 +25,21 @@ export default async function AppointmentsPage() {
     },
   });
 
-  // Get staff list for booking form
+  // Staff list for the booking form (students and admin can book)
   let staffList: { id: string; name: string; role: string }[] = [];
-  if (isStudent) {
+  if (isStudent || isAdmin) {
     staffList = await prisma.user.findMany({
       where: { role: { not: "STUDENT" } },
       select: { id: true, name: true, role: true },
+    });
+  }
+
+  // Student list for admin to book on behalf of students
+  let studentList: { id: string; name: string; email: string }[] = [];
+  if (isAdmin) {
+    studentList = await prisma.user.findMany({
+      where: { role: "STUDENT" },
+      select: { id: true, name: true, email: true },
     });
   }
 
@@ -37,7 +47,9 @@ export default async function AppointmentsPage() {
     <AppointmentsClient
       appointments={JSON.parse(JSON.stringify(appointments))}
       isStudent={isStudent}
+      isAdmin={isAdmin}
       staffList={staffList}
+      studentList={studentList}
     />
   );
 }

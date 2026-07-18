@@ -186,6 +186,105 @@ async function main() {
     ],
   });
 
+  // Create Sample Appointments
+  await prisma.appointment.createMany({
+    data: [
+      {
+        title: "Academic guidance session",
+        reason: "Need help choosing electives for next semester. Want to discuss career options in AI/ML vs full-stack development.",
+        date: new Date("2026-07-22"),
+        time: "10:00",
+        status: "CONFIRMED",
+        studentId: student1.id,
+        staffId: academicStaff.id,
+      },
+      {
+        title: "Counseling session - Exam anxiety",
+        reason: "Feeling overwhelmed with upcoming finals. Would like to discuss stress management techniques.",
+        date: new Date("2026-07-23"),
+        time: "14:30",
+        status: "PENDING",
+        studentId: student2.id,
+        staffId: counselor.id,
+      },
+      {
+        title: "Ragging incident follow-up",
+        reason: "Follow-up meeting regarding the reported incident in Block B hostel. Need to provide additional information.",
+        date: new Date("2026-07-24"),
+        time: "11:00",
+        status: "PENDING",
+        studentId: student2.id,
+        staffId: marshal.id,
+      },
+      {
+        title: "Lab equipment issue discussion",
+        reason: "The computers in Lab 204 have been running very slowly. Need to discuss possible upgrades or maintenance schedule.",
+        date: new Date("2026-07-25"),
+        time: "09:00",
+        status: "CONFIRMED",
+        studentId: student1.id,
+        staffId: maintenance.id,
+      },
+      {
+        title: "Career counseling",
+        reason: "Want to discuss internship opportunities and how to prepare for campus placements next year.",
+        date: new Date("2026-07-20"),
+        time: "15:00",
+        status: "COMPLETED",
+        studentId: student1.id,
+        staffId: counselor.id,
+      },
+    ],
+  });
+
+  // Create Sample Notifications
+  await prisma.notification.createMany({
+    data: [
+      {
+        title: "Ticket Assigned",
+        message: 'Your ticket "Unable to access course materials" has been assigned to Prof. James Smith.',
+        userId: student1.id,
+        link: "/dashboard/tickets",
+        isRead: false,
+      },
+      {
+        title: "Appointment Confirmed",
+        message: 'Your appointment "Academic guidance session" on July 22 has been confirmed.',
+        userId: student1.id,
+        link: "/dashboard/appointments",
+        isRead: true,
+      },
+      {
+        title: "New Announcement",
+        message: "Mental Health Awareness Week starts April 1. Free counseling sessions available.",
+        userId: student2.id,
+        link: "/dashboard/announcements",
+        isRead: false,
+      },
+      {
+        title: "Ticket Updated",
+        message: 'Your ticket "Bullying incident in hostel Block B" status changed to IN PROGRESS.',
+        userId: student2.id,
+        link: "/dashboard/tickets",
+        isRead: false,
+      },
+      {
+        title: "New Appointment Request",
+        message: 'Priya Sharma has requested an appointment: "Counseling session - Exam anxiety"',
+        userId: counselor.id,
+        link: "/dashboard/appointments",
+        isRead: false,
+      },
+      {
+        title: "Ticket Assigned to You",
+        message: 'You have been assigned ticket "Unable to access course materials".',
+        userId: academicStaff.id,
+        link: "/dashboard/tickets",
+        isRead: false,
+      },
+    ],
+  });
+
   console.log("✅ Database seeded successfully!");
   console.log("\n📋 Test Accounts:");
   console.log("  Admin: admin@campus.edu / admin123");
