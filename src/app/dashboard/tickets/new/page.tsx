@@ -89,9 +89,9 @@ export default function NewTicketPage() {
                   <label htmlFor="priority" className="form-label">
                     Priority *
                   </label>
-                  <select className="form-select" id="priority" name="priority" required>
+                  <select className="form-select" id="priority" name="priority" required defaultValue="MEDIUM">
                     <option value="LOW">Low</option>
-                    <option value="MEDIUM" selected>
+                    <option value="MEDIUM">
                       Medium
                     </option>
                     <option value="HIGH">High</option>
