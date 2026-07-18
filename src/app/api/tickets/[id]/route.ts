@@ -54,8 +54,23 @@ export async function PATCH(
     const { id } = await params;
     const body = await req.json();
 
-    // Only staff/admin can update tickets
+    // Only staff/admin can update tickets (except students can close their own)
     if (session.user.role === "STUDENT") {
+      // Students can only mark their own ticket as CLOSED
+      if (body.status === "CLOSED") {
+        const existingTicket = await prisma.ticket.findUnique({
+          where: { id },
+          select: { createdById: true },
+        });
+        if (!existingTicket || existingTicket.createdById !== session.user.id) {
+          return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+        }
+        const ticket = await prisma.ticket.update({
+          where: { id },
+          data: { status: "CLOSED" },
+        });
+        return NextResponse.json(ticket);
+      }
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -68,13 +83,25 @@ export async function PATCH(
       },
     });
 
-    // Notify the ticket creator
+    // Notify the ticket creator on status change
     if (body.status) {
       await prisma.notification.create({
         data: {
           title: "Ticket Updated",
           message: `Your ticket "${ticket.title}" status changed to ${body.status.replace(/_/g, " ")}.`,
           userId: ticket.createdById,
+          link: `/dashboard/tickets/${ticket.id}`,
+        },
+      });
+    }
+
+    // Notify the newly assigned staff member
+    if (body.assignedToId && body.assignedToId !== session.user.id) {
+      await prisma.notification.create({
+        data: {
+          title: "Ticket Assigned to You",
+          message: `You have been assigned ticket "${ticket.title}".`,
+          userId: body.assignedToId,
           link: `/dashboard/tickets/${ticket.id}`,
         },
       });

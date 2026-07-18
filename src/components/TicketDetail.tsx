@@ -48,6 +48,15 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
     router.refresh();
   }
 
+  async function handlePriorityChange(priority: string) {
+    await fetch(`/api/tickets/${ticket.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priority }),
+    });
+    router.refresh();
+  }
+
   async function handleAssign(assignedToId: string) {
     await fetch(`/api/tickets/${ticket.id}`, {
       method: "PATCH",
@@ -223,6 +232,20 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
               </div>
 
               <div className="mb-3">
+                <label className="form-label small">Update Priority</label>
+                <select
+                  className="form-select form-select-sm"
+                  value={ticket.priority}
+                  onChange={(e) => handlePriorityChange(e.target.value)}
+                >
+                  <option value="LOW">Low</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="HIGH">High</option>
+                  <option value="URGENT">Urgent</option>
+                </select>
+              </div>
+
+              <div className="mb-3">
                 <label className="form-label small">Assign to</label>
                 <select
                   className="form-select form-select-sm"
@@ -232,11 +255,27 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
                   <option value="">Unassigned</option>
                   {staff.map((s) => (
                     <option key={s.id} value={s.id}>
-                      {s.name} ({s.role})
+                      {s.name} ({s.role.replace(/_/g, " ")})
                     </option>
                   ))}
                 </select>
               </div>
+            </div>
+          )}
+
+          {/* Student can close their own ticket */}
+          {!isStaff && ticket.status !== "CLOSED" && (
+            <div className="card p-4">
+              <h6 className="fw-bold mb-3">Actions</h6>
+              <p className="text-muted small mb-3">
+                If your issue has been resolved, you can close this ticket.
+              </p>
+              <button
+                className="btn btn-outline-navy btn-sm w-100"
+                onClick={() => handleStatusChange("CLOSED")}
+              >
+                ✓ Close Ticket
+              </button>
             </div>
           )}
         </div>
