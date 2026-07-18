@@ -40,134 +40,178 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-vh-100 d-flex align-items-center bg-light py-5">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card p-4 shadow-sm">
-              <div className="text-center mb-4">
-                <h2 className="fw-bold">🎓 Create Account</h2>
-                <p className="text-muted">Join Campus Companion</p>
-              </div>
+    <div className="auth-shell">
+      {/* Hero side */}
+      <aside className="auth-hero d-none d-lg-flex">
+        <div>
+          <span className="brand-mark">CC</span>
+        </div>
 
-              {error && (
-                <div className="alert alert-danger" role="alert">
-                  {error}
-                </div>
-              )}
+        <div className="auth-hero-inner">
+          <h1 className="auth-title">
+            Join
+            <br />
+            Campus Companion
+          </h1>
+          <span className="auth-tagline">
+            Student Support · Campus Safety · Welfare
+          </span>
+          <p className="auth-subtitle">
+            One account gives you access to counseling, academic help, safety
+            reporting, and campus appointments.
+          </p>
 
-              <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      name="name"
-                      required
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="studentId" className="form-label">
-                      Student ID
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="studentId"
-                      name="studentId"
-                      placeholder="STU-2024-001"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    name="email"
-                    required
-                    placeholder="you@university.edu"
-                  />
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="department" className="form-label">
-                      Department
-                    </label>
-                    <select className="form-select" id="department" name="department">
-                      <option value="">Select Department</option>
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Engineering">Engineering</option>
-                      <option value="Business">Business</option>
-                      <option value="Arts">Arts</option>
-                      <option value="Science">Science</option>
-                      <option value="Law">Law</option>
-                      <option value="Medicine">Medicine</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="phone" className="form-label">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="phone"
-                      name="phone"
-                      placeholder="+91 9876543210"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Password *
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    name="password"
-                    required
-                    minLength={6}
-                    placeholder="Minimum 6 characters"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary w-100"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span className="spinner-border spinner-border-sm me-2" />
-                  ) : null}
-                  Create Account
-                </button>
-              </form>
-
-              <div className="text-center mt-3">
-                <small className="text-muted">
-                  Already have an account?{" "}
-                  <Link href="/login" className="text-primary">
-                    Sign in
-                  </Link>
-                </small>
-              </div>
+          <div className="auth-features">
+            <div className="auth-feature">
+              <div style={{ fontSize: "1.5rem" }}>🎓</div>
+              <h6>For Students</h6>
+              <p>Get help, report issues, book appointments.</p>
+            </div>
+            <div className="auth-feature">
+              <div style={{ fontSize: "1.5rem" }}>🔒</div>
+              <h6>Private &amp; Secure</h6>
+              <p>Anonymous reporting when you need it.</p>
+            </div>
+            <div className="auth-feature">
+              <div style={{ fontSize: "1.5rem" }}>⚡</div>
+              <h6>Fast Support</h6>
+              <p>Routed automatically to the right team.</p>
             </div>
           </div>
         </div>
-      </div>
+
+        <div style={{ height: 20 }} />
+      </aside>
+
+      {/* Form side */}
+      <main className="auth-panel">
+        <div className="auth-panel-inner" style={{ maxWidth: 480 }}>
+          <div className="auth-tabs">
+            <Link href="/login" className="auth-tab" style={{ textDecoration: "none" }}>
+              Sign in
+            </Link>
+            <button type="button" className="auth-tab active">
+              Create account
+            </button>
+          </div>
+
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="name" className="form-label">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Jane Doe"
+                />
+              </div>
+              <div className="col-md-6 mb-3">
+                <label htmlFor="studentId" className="form-label">
+                  Student ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="studentId"
+                  name="studentId"
+                  placeholder="STU-2024-001"
+                />
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                University Email *
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                required
+                placeholder="name@university.edu"
+              />
+            </div>
+
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="department" className="form-label">
+                  Department
+                </label>
+                <select className="form-select" id="department" name="department">
+                  <option value="">Select Department</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Business">Business</option>
+                  <option value="Arts">Arts</option>
+                  <option value="Science">Science</option>
+                  <option value="Law">Law</option>
+                  <option value="Medicine">Medicine</option>
+                </select>
+              </div>
+              <div className="col-md-6 mb-3">
+                <label htmlFor="phone" className="form-label">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  id="phone"
+                  name="phone"
+                  placeholder="+91 9876543210"
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="password" className="form-label">
+                Password *
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                required
+                minLength={6}
+                placeholder="Minimum 6 characters"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-navy w-100 py-2"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" />
+                  Creating account...
+                </>
+              ) : (
+                "Create account"
+              )}
+            </button>
+          </form>
+
+          <div className="text-center mt-4">
+            <small className="text-muted">
+              Already have an account? <Link href="/login">Sign in</Link>
+            </small>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
