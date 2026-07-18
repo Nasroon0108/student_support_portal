@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import ThemeToggle from "./ThemeToggle";
 
 const studentLinks = [
   { href: "/dashboard", label: "Dashboard", icon: "◈" },
@@ -49,20 +48,22 @@ export default function Sidebar() {
     : "";
 
   return (
-    <div className="sidebar d-flex flex-column p-3" style={{ width: "260px" }}>
+    <aside className="sidebar">
+      {/* Brand */}
       <div className="sidebar-brand d-flex align-items-center gap-2">
         <span className="sidebar-brand-mark">CC</span>
         <div>
           <div className="font-serif fw-bold" style={{ fontSize: "1.05rem" }}>
             Campus Companion
           </div>
-          <small style={{ color: "rgba(246,239,227,0.6)", fontSize: "0.75rem" }}>
+          <small style={{ color: "var(--sidebar-text-muted)", fontSize: "0.75rem" }}>
             Student Portal
           </small>
         </div>
       </div>
 
-      <nav className="nav flex-column flex-grow-1">
+      {/* Scrollable nav area */}
+      <nav className="sidebar-nav">
         {links.map((link) => (
           <Link
             key={link.href}
@@ -79,19 +80,16 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div
-        className="pt-3 mt-3 d-flex flex-column gap-2"
-        style={{ borderTop: "1px solid rgba(246,239,227,0.15)" }}
-      >
-        <div className="px-3">
-          <div style={{ fontSize: "0.9rem", color: "var(--sidebar-text)" }}>
+      {/* Profile footer pinned to bottom */}
+      <div className="sidebar-footer">
+        <div className="px-3 mb-2">
+          <div style={{ fontSize: "0.9rem", color: "var(--sidebar-text)", fontWeight: 500 }}>
             {session?.user?.name}
           </div>
           <small style={{ color: "var(--sidebar-text-muted)", fontSize: "0.75rem" }}>
             {roleLabel}
           </small>
         </div>
-        <ThemeToggle variant="sidebar" />
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
           className="btn btn-outline-terracotta btn-sm w-100"
@@ -99,6 +97,6 @@ export default function Sidebar() {
           Sign Out
         </button>
       </div>
-    </div>
+    </aside>
   );
 }
