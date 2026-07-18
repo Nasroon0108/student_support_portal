@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -40,7 +41,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="auth-shell">
+    <div className="auth-shell" style={{ position: "relative" }}>
+      <div style={{ position: "absolute", top: 20, right: 24, zIndex: 10 }}>
+        <ThemeToggle />
+      </div>
+
       {/* Hero side */}
       <aside className="auth-hero d-none d-lg-flex">
         <div>

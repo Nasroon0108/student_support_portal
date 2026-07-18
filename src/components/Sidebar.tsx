@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import ThemeToggle from "./ThemeToggle";
 
 const studentLinks = [
   { href: "/dashboard", label: "Dashboard", icon: "◈" },
@@ -79,17 +80,18 @@ export default function Sidebar() {
       </nav>
 
       <div
-        className="pt-3 mt-3"
+        className="pt-3 mt-3 d-flex flex-column gap-2"
         style={{ borderTop: "1px solid rgba(246,239,227,0.15)" }}
       >
-        <div className="px-3 mb-3">
-          <div style={{ fontSize: "0.9rem", color: "var(--cream-soft)" }}>
+        <div className="px-3">
+          <div style={{ fontSize: "0.9rem", color: "var(--sidebar-text)" }}>
             {session?.user?.name}
           </div>
-          <small style={{ color: "rgba(246,239,227,0.6)", fontSize: "0.75rem" }}>
+          <small style={{ color: "var(--sidebar-text-muted)", fontSize: "0.75rem" }}>
             {roleLabel}
           </small>
         </div>
+        <ThemeToggle variant="sidebar" />
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
           className="btn btn-outline-terracotta btn-sm w-100"

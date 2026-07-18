@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
@@ -13,11 +14,12 @@ export default function Home() {
             <span className="brand-mark" style={{ width: 42, height: 42, fontSize: "1rem" }}>
               CC
             </span>
-            <span className="font-serif fs-4 fw-bold" style={{ color: "var(--navy)" }}>
+            <span className="font-serif fs-4 fw-bold" style={{ color: "var(--text-strong)" }}>
               Campus Companion
             </span>
           </Link>
-          <div className="d-flex gap-2">
+          <div className="d-flex align-items-center gap-2">
+            <ThemeToggle />
             <Link href="/login" className="btn btn-outline-navy btn-sm">
               Login
             </Link>
@@ -37,19 +39,11 @@ export default function Home() {
                 Student Support · Campus Safety · Welfare
               </span>
               <h1>Your Campus, Your Companion</h1>
-              <p className="lead mb-4">
+              <p className="lead mb-0">
                 A unified platform for student support, campus safety, and
                 welfare management. Report issues, book appointments, access
                 counseling, and stay informed — all in one place.
               </p>
-              <div className="d-flex gap-3">
-                <Link href="/register" className="btn btn-navy px-4">
-                  Get Started
-                </Link>
-                <Link href="/login" className="btn btn-outline-navy px-4">
-                  Sign In
-                </Link>
-              </div>
             </div>
 
             <div className="col-lg-6">
@@ -57,7 +51,7 @@ export default function Home() {
                 <div className="col-6">
                   <div className="feature-tile">
                     <div className="icon">📚</div>
-                    <h6 className="fw-semibold mb-1" style={{ color: "var(--navy)" }}>
+                    <h6 className="fw-semibold mb-1" style={{ color: "var(--text-strong)" }}>
                       Academic Support
                     </h6>
                     <small className="text-muted">Resources and help to excel.</small>
@@ -66,7 +60,7 @@ export default function Home() {
                 <div className="col-6">
                   <div className="feature-tile">
                     <div className="icon">🛡️</div>
-                    <h6 className="fw-semibold mb-1" style={{ color: "var(--navy)" }}>
+                    <h6 className="fw-semibold mb-1" style={{ color: "var(--text-strong)" }}>
                       Campus Safety
                     </h6>
                     <small className="text-muted">Report, respond, stay safe.</small>
@@ -75,7 +69,7 @@ export default function Home() {
                 <div className="col-6">
                   <div className="feature-tile">
                     <div className="icon">💬</div>
-                    <h6 className="fw-semibold mb-1" style={{ color: "var(--navy)" }}>
+                    <h6 className="fw-semibold mb-1" style={{ color: "var(--text-strong)" }}>
                       Counseling
                     </h6>
                     <small className="text-muted">Confidential well-being support.</small>
@@ -84,7 +78,7 @@ export default function Home() {
                 <div className="col-6">
                   <div className="feature-tile">
                     <div className="icon">📅</div>
-                    <h6 className="fw-semibold mb-1" style={{ color: "var(--navy)" }}>
+                    <h6 className="fw-semibold mb-1" style={{ color: "var(--text-strong)" }}>
                       Appointments
                     </h6>
                     <small className="text-muted">Book time with staff easily.</small>
@@ -97,7 +91,7 @@ export default function Home() {
       </section>
 
       {/* How it works */}
-      <section className="py-5" style={{ backgroundColor: "var(--cream-soft)" }}>
+      <section className="py-5" style={{ backgroundColor: "var(--bg-soft)" }}>
         <div className="container">
           <div className="text-center mb-5">
             <h2 className="fw-bold mb-2">How It Works</h2>
@@ -139,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: "var(--navy)", color: "var(--cream-soft)" }} className="py-4">
+      <footer style={{ backgroundColor: "var(--sidebar-bg)", color: "var(--sidebar-text)" }} className="py-4">
         <div className="container text-center">
           <p className="mb-0" style={{ opacity: 0.75 }}>
             © 2026 Campus Companion · Student welfare and campus safety.
