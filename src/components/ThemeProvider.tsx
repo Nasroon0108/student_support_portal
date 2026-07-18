@@ -35,11 +35,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggle = () => setTheme(theme === "light" ? "dark" : "light");
 
+  // `mounted` is intentionally read only so the effect above triggers a re-render
+  // after hydration, syncing the client state with the value set by the pre-paint script.
+  void mounted;
+
   return (
     <ThemeContext.Provider value={{ theme, toggle, setTheme }}>
-      <span suppressHydrationWarning data-mounted={mounted}>
-        {children}
-      </span>
+      {children}
     </ThemeContext.Provider>
   );
 }
