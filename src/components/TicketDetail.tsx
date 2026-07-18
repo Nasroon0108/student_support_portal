@@ -39,29 +39,44 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
   const [loading, setLoading] = useState(false);
   const isStaff = currentUser.role !== "STUDENT";
 
+  // Local state for the actions panel (staff only)
+  const [editStatus, setEditStatus] = useState(ticket.status);
+  const [editPriority, setEditPriority] = useState(ticket.priority);
+  const [editAssignee, setEditAssignee] = useState(ticket.assignedToId || "");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const hasChanges =
+    editStatus !== ticket.status ||
+    editPriority !== ticket.priority ||
+    editAssignee !== (ticket.assignedToId || "");
+
+  async function handleSaveActions() {
+    setSaving(true);
+    setSaved(false);
+
+    const payload: Record<string, string> = {};
+    if (editStatus !== ticket.status) payload.status = editStatus;
+    if (editPriority !== ticket.priority) payload.priority = editPriority;
+    if (editAssignee !== (ticket.assignedToId || "")) payload.assignedToId = editAssignee;
+
+    await fetch(`/api/tickets/${ticket.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+    router.refresh();
+  }
+
   async function handleStatusChange(status: string) {
     await fetch(`/api/tickets/${ticket.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
-    });
-    router.refresh();
-  }
-
-  async function handlePriorityChange(priority: string) {
-    await fetch(`/api/tickets/${ticket.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priority }),
-    });
-    router.refresh();
-  }
-
-  async function handleAssign(assignedToId: string) {
-    await fetch(`/api/tickets/${ticket.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ assignedToId }),
     });
     router.refresh();
   }
@@ -220,8 +235,8 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
                 <label className="form-label small">Update Status</label>
                 <select
                   className="form-select form-select-sm"
-                  value={ticket.status}
-                  onChange={(e) => handleStatusChange(e.target.value)}
+                  value={editStatus}
+                  onChange={(e) => setEditStatus(e.target.value)}
                 >
                   <option value="OPEN">Open</option>
                   <option value="IN_PROGRESS">In Progress</option>
@@ -235,8 +250,8 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
                 <label className="form-label small">Update Priority</label>
                 <select
                   className="form-select form-select-sm"
-                  value={ticket.priority}
-                  onChange={(e) => handlePriorityChange(e.target.value)}
+                  value={editPriority}
+                  onChange={(e) => setEditPriority(e.target.value)}
                 >
                   <option value="LOW">Low</option>
                   <option value="MEDIUM">Medium</option>
@@ -249,8 +264,8 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
                 <label className="form-label small">Assign to</label>
                 <select
                   className="form-select form-select-sm"
-                  value={ticket.assignedToId || ""}
-                  onChange={(e) => handleAssign(e.target.value)}
+                  value={editAssignee}
+                  onChange={(e) => setEditAssignee(e.target.value)}
                 >
                   <option value="">Unassigned</option>
                   {staff.map((s) => (
@@ -260,6 +275,28 @@ export default function TicketDetail({ ticket, currentUser, staff }: Props) {
                   ))}
                 </select>
               </div>
+
+              <button
+                className="btn btn-navy btn-sm w-100"
+                onClick={handleSaveActions}
+                disabled={!hasChanges || saving}
+              >
+                {saving ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" />
+                    Saving...
+                  </>
+                ) : saved ? (
+                  "✓ Saved"
+                ) : (
+                  "Save Changes"
+                )}
+              </button>
+              {!hasChanges && !saved && (
+                <small className="text-muted d-block text-center mt-2">
+                  No changes to save
+                </small>
+              )}
             </div>
           )}
 
