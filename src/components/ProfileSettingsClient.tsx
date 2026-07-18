@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import ThemeToggle from "./ThemeToggle";
@@ -13,16 +13,20 @@ interface UserProfile {
   department: string | null;
   studentId: string | null;
   role: string;
+  image: string | null;
   createdAt: string;
 }
 
 export default function ProfileSettingsClient({ user }: { user: UserProfile }) {
   const router = useRouter();
   const { update } = useSession();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState(user.name);
   const [phone, setPhone] = useState(user.phone ?? "");
   const [department, setDepartment] = useState(user.department ?? "");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(user.image);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -30,6 +34,7 @@ export default function ProfileSettingsClient({ user }: { user: UserProfile }) {
 
   const [profileMsg, setProfileMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [passwordMsg, setPasswordMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [avatarMsg, setAvatarMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [savingProfile, setSavingProfile] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
 
@@ -44,6 +49,52 @@ export default function ProfileSettingsClient({ user }: { user: UserProfile }) {
     .join("")
     .slice(0, 2)
     .toUpperCase();
+
+  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAvatarMsg(null);
+    setUploadingAvatar(true);
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const res = await fetch("/api/profile/avatar", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    setUploadingAvatar(false);
+
+    if (!res.ok) {
+      setAvatarMsg({ type: "error", text: data.error || "Upload failed" });
+    } else {
+      setAvatarUrl(data.image);
+      setAvatarMsg({ type: "success", text: "Photo updated!" });
+      router.refresh();
+    }
+
+    // Reset file input
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  async function handleRemoveAvatar() {
+    setAvatarMsg(null);
+    setUploadingAvatar(true);
+
+    const res = await fetch("/api/profile/avatar", { method: "DELETE" });
+    setUploadingAvatar(false);
+
+    if (res.ok) {
+      setAvatarUrl(null);
+      setAvatarMsg({ type: "success", text: "Photo removed" });
+      router.refresh();
+    } else {
+      setAvatarMsg({ type: "error", text: "Failed to remove photo" });
+    }
+  }
 
   async function handleProfileSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -111,19 +162,91 @@ export default function ProfileSettingsClient({ user }: { user: UserProfile }) {
         {/* Left: identity card */}
         <div className="col-md-4">
           <div className="card p-4 text-center">
-            <div
-              className="mx-auto mb-3 d-flex align-items-center justify-content-center font-serif fw-bold"
-              style={{
-                width: 88,
-                height: 88,
-                borderRadius: "50%",
-                backgroundColor: "var(--brand)",
-                color: "var(--brand-ink)",
-                fontSize: "1.75rem",
-              }}
-            >
-              {initials}
+            {/* Avatar with upload */}
+            <div className="position-relative mx-auto mb-3" style={{ width: 100, height: 100 }}>
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt={user.name}
+                  className="rounded-circle"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    objectFit: "cover",
+                    border: "3px solid var(--border)",
+                  }}
+                />
+              ) : (
+                <div
+                  className="d-flex align-items-center justify-content-center font-serif fw-bold rounded-circle"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: "var(--brand)",
+                    color: "var(--brand-ink)",
+                    fontSize: "2rem",
+                    border: "3px solid var(--border)",
+                  }}
+                >
+                  {initials}
+                </div>
+              )}
+
+              {/* Camera overlay button */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="position-absolute d-flex align-items-center justify-content-center"
+                style={{
+                  bottom: 0,
+                  right: 0,
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  backgroundColor: "var(--accent)",
+                  color: "#fff",
+                  border: "2px solid var(--bg-soft)",
+                  cursor: "pointer",
+                  fontSize: "0.85rem",
+                }}
+                title="Upload photo"
+                aria-label="Upload profile photo"
+              >
+                {uploadingAvatar ? (
+                  <span className="spinner-border spinner-border-sm" style={{ width: 14, height: 14 }} />
+                ) : (
+                  "📷"
+                )}
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                style={{ display: "none" }}
+                onChange={handleAvatarUpload}
+              />
             </div>
+
+            {avatarMsg && (
+              <small className={`d-block mb-2 ${avatarMsg.type === "success" ? "text-success" : "text-danger"}`}>
+                {avatarMsg.text}
+              </small>
+            )}
+
+            {avatarUrl && (
+              <button
+                type="button"
+                className="btn btn-link btn-sm text-danger mb-2 p-0"
+                onClick={handleRemoveAvatar}
+                disabled={uploadingAvatar}
+                style={{ fontSize: "0.8rem" }}
+              >
+                Remove photo
+              </button>
+            )}
+
             <h5 className="fw-bold mb-0">{user.name}</h5>
             <small className="text-muted d-block mb-2">{user.email}</small>
             <span className="badge bg-primary d-inline-block mb-3">{roleLabel}</span>

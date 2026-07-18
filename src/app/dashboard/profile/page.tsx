@@ -19,6 +19,7 @@ export default async function ProfilePage() {
       department: true,
       studentId: true,
       role: true,
+      image: true,
       createdAt: true,
     },
   });
