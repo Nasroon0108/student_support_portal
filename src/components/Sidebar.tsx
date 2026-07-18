@@ -96,7 +96,16 @@ export default function Sidebar() {
             pathname === "/dashboard/profile" ? "active" : ""
           }`}
         >
-          <span className="sidebar-profile-avatar">{initials}</span>
+          {session?.user?.image ? (
+            <img
+              src={session.user.image}
+              alt=""
+              className="sidebar-profile-avatar"
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <span className="sidebar-profile-avatar">{initials}</span>
+          )}
           <div className="flex-grow-1" style={{ minWidth: 0 }}>
             <div className="sidebar-profile-name">{session?.user?.name}</div>
             <small className="sidebar-profile-role">{roleLabel}</small>

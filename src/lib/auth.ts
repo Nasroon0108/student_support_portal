@@ -55,9 +55,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.role = (user as { role: string }).role;
         token.id = user.id;
+        token.picture = (user as { image?: string | null }).image ?? undefined;
       }
-      if (trigger === "update" && session?.name) {
-        token.name = session.name;
+      if (trigger === "update") {
+        if (session?.name) token.name = session.name;
+        if (session?.image !== undefined) token.picture = session.image;
       }
       return token;
     },
@@ -65,6 +67,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.role = token.role as string;
         session.user.id = token.id as string;
+        // Fetch fresh image from DB so sidebar always reflects the latest avatar
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id as string },
+          select: { image: true },
+        });
+        session.user.image = dbUser?.image ?? null;
       }
       return session;
     },
