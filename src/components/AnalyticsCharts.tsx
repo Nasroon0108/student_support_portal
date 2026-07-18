@@ -86,37 +86,37 @@ export default function AnalyticsCharts({ stats }: Props) {
       <div className="row g-3 mb-4">
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold mb-0">{stats.totalTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy)" }}>{stats.totalTickets}</h3>
             <small className="text-muted">Total Tickets</small>
           </div>
         </div>
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold text-warning mb-0">{stats.openTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--warning)" }}>{stats.openTickets}</h3>
             <small className="text-muted">Open</small>
           </div>
         </div>
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold text-info mb-0">{stats.inProgressTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy-soft)" }}>{stats.inProgressTickets}</h3>
             <small className="text-muted">In Progress</small>
           </div>
         </div>
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold text-success mb-0">{stats.resolvedTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--success)" }}>{stats.resolvedTickets}</h3>
             <small className="text-muted">Resolved</small>
           </div>
         </div>
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold mb-0">{stats.totalUsers}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--terracotta)" }}>{stats.totalUsers}</h3>
             <small className="text-muted">Users</small>
           </div>
         </div>
         <div className="col-md-2">
           <div className="card p-3 text-center">
-            <h3 className="fw-bold mb-0">{stats.totalAppointments}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--sage)" }}>{stats.totalAppointments}</h3>
             <small className="text-muted">Appointments</small>
           </div>
         </div>
