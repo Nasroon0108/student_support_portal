@@ -47,6 +47,14 @@ export default function Sidebar() {
     ? role.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())
     : "";
 
+  const initials = (session?.user?.name ?? "")
+    .split(" ")
+    .filter(Boolean)
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <aside className="sidebar">
       {/* Brand */}
@@ -82,14 +90,21 @@ export default function Sidebar() {
 
       {/* Profile footer pinned to bottom */}
       <div className="sidebar-footer">
-        <div className="px-3 mb-2">
-          <div style={{ fontSize: "0.9rem", color: "var(--sidebar-text)", fontWeight: 500 }}>
-            {session?.user?.name}
+        <Link
+          href="/dashboard/profile"
+          className={`sidebar-profile d-flex align-items-center gap-2 mb-2 ${
+            pathname === "/dashboard/profile" ? "active" : ""
+          }`}
+        >
+          <span className="sidebar-profile-avatar">{initials}</span>
+          <div className="flex-grow-1" style={{ minWidth: 0 }}>
+            <div className="sidebar-profile-name">{session?.user?.name}</div>
+            <small className="sidebar-profile-role">{roleLabel}</small>
           </div>
-          <small style={{ color: "var(--sidebar-text-muted)", fontSize: "0.75rem" }}>
-            {roleLabel}
-          </small>
-        </div>
+          <span className="sidebar-profile-chevron" aria-hidden>
+            ›
+          </span>
+        </Link>
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
           className="btn btn-outline-terracotta btn-sm w-100"

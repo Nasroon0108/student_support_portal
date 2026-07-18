@@ -365,6 +365,68 @@ a:hover {
   border-top: 1px solid rgba(246, 239, 227, 0.15);
 }
 
+.sidebar-profile {
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.sidebar-profile:hover {
+  background-color: rgba(246, 239, 227, 0.08);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .sidebar-profile:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-profile.active {
+  background-color: var(--sidebar-active-bg);
+  border-color: transparent;
+}
+
+.sidebar-profile.active .sidebar-profile-name,
+.sidebar-profile.active .sidebar-profile-role {
+  color: var(--sidebar-active-text);
+}
+
+.sidebar-profile-avatar {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--cream);
+  color: var(--navy-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.sidebar-profile-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sidebar-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-profile-role {
+  font-size: 0.75rem;
+  color: var(--sidebar-text-muted);
+}
+
+.sidebar-profile-chevron {
+  color: var(--sidebar-text-muted);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
 [data-theme="dark"] .sidebar-footer {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
