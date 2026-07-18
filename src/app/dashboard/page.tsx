@@ -38,7 +38,7 @@ export default async function DashboardPage() {
   return (
     <div>
       <div className="page-header">
-        <h1>Welcome back, {session?.user?.name} 👋</h1>
+        <h1>Dashboard</h1>
         <p className="text-muted">Here&apos;s an overview of your campus activity</p>
       </div>
 
