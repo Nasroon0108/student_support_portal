@@ -28,21 +28,24 @@ interface Props {
 }
 
 export default function AnalyticsCharts({ stats }: Props) {
+  const palette = [
+    "#0f2745", // navy
+    "#c85a3a", // terracotta
+    "#7a8f6a", // sage
+    "#b78a3f", // gold
+    "#1a355e", // navy-soft
+    "#d97757", // terracotta-soft
+    "#6b6459", // muted
+  ];
+
   const categoryData = {
     labels: stats.ticketsByCategory.map((t) => t.category.replace(/_/g, " ")),
     datasets: [
       {
         label: "Tickets by Category",
         data: stats.ticketsByCategory.map((t) => t.count),
-        backgroundColor: [
-          "#4f46e5",
-          "#0ea5e9",
-          "#10b981",
-          "#f59e0b",
-          "#ef4444",
-          "#8b5cf6",
-          "#6b7280",
-        ],
+        backgroundColor: palette,
+        borderRadius: 6,
       },
     ],
   };
@@ -53,7 +56,9 @@ export default function AnalyticsCharts({ stats }: Props) {
       {
         label: "Tickets by Priority",
         data: stats.ticketsByPriority.map((t) => t.count),
-        backgroundColor: ["#6b7280", "#0ea5e9", "#f59e0b", "#ef4444"],
+        backgroundColor: ["#6b6459", "#7a8f6a", "#b78a3f", "#c85a3a"],
+        borderColor: "#fbf6ec",
+        borderWidth: 2,
       },
     ],
   };
@@ -63,7 +68,9 @@ export default function AnalyticsCharts({ stats }: Props) {
     datasets: [
       {
         data: [stats.openTickets, stats.inProgressTickets, stats.resolvedTickets],
-        backgroundColor: ["#f59e0b", "#0ea5e9", "#10b981"],
+        backgroundColor: ["#b78a3f", "#1a355e", "#7a8f6a"],
+        borderColor: "#fbf6ec",
+        borderWidth: 2,
       },
     ],
   };

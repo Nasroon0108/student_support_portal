@@ -45,27 +45,27 @@ export default async function DashboardPage() {
       {/* Stats Cards */}
       <div className="row g-3 mb-4">
         <div className="col-md-3">
-          <div className="card stat-card p-3" style={{ borderLeftColor: "var(--primary)" }}>
+          <div className="card stat-card p-3" style={{ borderLeftColor: "var(--navy)" }}>
             <small className="text-muted">Total Tickets</small>
-            <h3 className="fw-bold mb-0">{totalTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy)" }}>{totalTickets}</h3>
           </div>
         </div>
         <div className="col-md-3">
           <div className="card stat-card p-3" style={{ borderLeftColor: "var(--warning)" }}>
             <small className="text-muted">Open</small>
-            <h3 className="fw-bold mb-0">{openTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy)" }}>{openTickets}</h3>
           </div>
         </div>
         <div className="col-md-3">
           <div className="card stat-card p-3" style={{ borderLeftColor: "var(--success)" }}>
             <small className="text-muted">Resolved</small>
-            <h3 className="fw-bold mb-0">{resolvedTickets}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy)" }}>{resolvedTickets}</h3>
           </div>
         </div>
         <div className="col-md-3">
-          <div className="card stat-card p-3" style={{ borderLeftColor: "var(--secondary)" }}>
+          <div className="card stat-card p-3" style={{ borderLeftColor: "var(--terracotta)" }}>
             <small className="text-muted">Pending Appointments</small>
-            <h3 className="fw-bold mb-0">{appointments}</h3>
+            <h3 className="fw-bold mb-0" style={{ color: "var(--navy)" }}>{appointments}</h3>
           </div>
         </div>
       </div>
