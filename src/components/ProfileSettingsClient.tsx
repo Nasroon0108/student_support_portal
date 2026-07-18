@@ -157,7 +157,7 @@ export default function ProfileSettingsClient({ user }: { user: UserProfile }) {
               <span className="text-muted" style={{ fontSize: "0.9rem" }}>
                 Theme
               </span>
-              <ThemeToggle variant="sidebar" />
+              <ThemeToggle variant="block" />
             </div>
           </div>
         </div>
