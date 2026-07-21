@@ -148,3 +148,203 @@ npm run dev
 Open your browser at: **http://localhost:3000**
 
 ---
+
+## Quick Start (TL;DR)
+
+If you just want to run it fast, here are all commands in order:
+
+```bash
+cd student_support_portal
+npm install
+npx prisma generate
+npm run db:push
+npm run db:seed
+npm run dev
+```
+
+Then open http://localhost:3000.
+
+---
+
+## Test Accounts (After Seeding)
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@campus.edu | admin123 |
+| Counselor | counselor@campus.edu | staff123 |
+| Academic Staff | academic@campus.edu | staff123 |
+| Campus Marshal | marshal@campus.edu | staff123 |
+| Maintenance | maintenance@campus.edu | staff123 |
+| Student 1 | student1@campus.edu | student123 |
+| Student 2 | student2@campus.edu | student123 |
+
+---
+
+## Packages Installed (Full List)
+
+### Production Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `next` (16.2.10) | React framework (frontend + backend) |
+| `react` (19.2.4) | UI component library |
+| `react-dom` (19.2.4) | React DOM rendering |
+| `typescript` (5.x) | Type safety |
+| `bootstrap` (5.3.8) | CSS framework for responsive design |
+| `react-bootstrap` (2.10.10) | Bootstrap React components |
+| `@popperjs/core` (2.11.8) | Positioning for Bootstrap dropdowns |
+| `prisma` (7.8.0) | Database ORM CLI |
+| `@prisma/client` (7.8.0) | Database query builder |
+| `@prisma/adapter-better-sqlite3` (7.8.0) | SQLite driver adapter for Prisma 7 |
+| `better-sqlite3` (12.11.1) | SQLite database driver |
+| `next-auth` (5.0.0-beta.31) | Authentication (login/register/sessions) |
+| `@auth/prisma-adapter` (2.11.2) | Connects Auth.js to Prisma |
+| `bcryptjs` (3.0.3) | Password hashing |
+| `zod` (4.4.3) | Input validation |
+| `chart.js` (4.5.1) | Chart rendering engine |
+| `react-chartjs-2` (5.3.1) | React wrapper for Chart.js |
+| `cloudinary` (2.10.0) | Cloud image storage |
+| `nodemailer` (7.0.13) | Email sending |
+| `openai` (6.48.0) | AI integration (planned) |
+| `socket.io` (4.8.3) | Real-time server (planned) |
+| `socket.io-client` (4.8.3) | Real-time client (planned) |
+
+### Dev Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `@types/bcryptjs` | TypeScript types for bcryptjs |
+| `@types/node` | TypeScript types for Node.js |
+| `@types/nodemailer` | TypeScript types for nodemailer |
+| `@types/react` | TypeScript types for React |
+| `@types/react-dom` | TypeScript types for React DOM |
+| `dotenv` (17.4.2) | Loads .env variables for Prisma config |
+| `eslint` (9.x) | Code linting |
+| `eslint-config-next` | Next.js-specific lint rules |
+| `tsx` (4.23.1) | TypeScript execution (for seed script) |
+
+---
+
+## Useful Commands Reference
+
+| Command | What It Does |
+|---------|-------------|
+| `npm run dev` | Start development server (http://localhost:3000) |
+| `npm run build` | Create production build |
+| `npm run start` | Run production build |
+| `npm run lint` | Check code for issues |
+| `npm run db:push` | Push schema changes to database |
+| `npm run db:seed` | Populate database with test data |
+| `npm run db:studio` | Open visual database browser (http://localhost:5555) |
+| `npm run db:generate` | Regenerate Prisma client after schema changes |
+| `npm run db:migrate` | Create migration files (for version control) |
+
+---
+
+## Troubleshooting
+
+### "Port 3000 already in use"
+Another process is using port 3000. Kill it:
+```bash
+# Windows:
+netstat -ano | findstr :3000
+taskkill /PID <pid_number> /F
+
+# Mac/Linux:
+lsof -ti:3000 | xargs kill -9
+```
+Or just run `npm run dev` and it'll auto-pick port 3001.
+
+### "Module not found" errors after cloning
+You forgot to install dependencies:
+```bash
+npm install
+npx prisma generate
+```
+
+### "Table does not exist" error
+Database isn't set up yet:
+```bash
+npm run db:push
+npm run db:seed
+```
+
+### "Invalid email or password" when logging in
+The database might be empty (no seeded users). Run:
+```bash
+npm run db:seed
+```
+
+### Want to reset everything from scratch?
+```bash
+# Windows:
+del dev.db
+npm run db:push
+npm run db:seed
+
+# Mac/Linux:
+rm dev.db
+npm run db:push
+npm run db:seed
+```
+
+### Dev server hangs after PC sleep (Windows)
+```bash
+taskkill /IM node.exe /F
+npm run dev
+```
+
+---
+
+## Sharing the Project With Friends
+
+### What to share:
+- The entire project folder **excluding:**
+  - `node_modules/` (800MB+ — they'll run `npm install` themselves)
+  - `.next/` (build cache — regenerates automatically)
+  - `dev.db` (database — they'll create their own with `db:push` + `db:seed`)
+
+### Best way to share:
+1. **GitHub (recommended):** Push to a private/public repo, friends clone it
+2. **ZIP file:** Zip the folder (exclude `node_modules`, `.next`, `dev.db`), send via Google Drive/WhatsApp
+3. **USB drive:** Same as ZIP, copy the folder minus the excluded items
+
+### Their setup (after receiving the files):
+```bash
+cd student_support_portal
+npm install
+npx prisma generate
+npm run db:push
+npm run db:seed
+npm run dev
+```
+
+That's it. 5 commands and they're running.
+
+---
+
+## Environment-Specific Notes
+
+### Windows
+- Use PowerShell or Command Prompt
+- If `npx` commands fail, try running terminal as Administrator
+- If `better-sqlite3` fails to install, you may need Windows Build Tools:
+  ```bash
+  npm install --global windows-build-tools
+  ```
+
+### macOS
+- If Xcode Command Line Tools are missing:
+  ```bash
+  xcode-select --install
+  ```
+
+### Linux
+- You may need build essentials:
+  ```bash
+  sudo apt-get install build-essential python3
+  ```
+
+---
+
+*Guide version: 1.0 | Last updated: July 2026*
